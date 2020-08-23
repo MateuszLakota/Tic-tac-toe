@@ -1,42 +1,69 @@
 package pl.lakota.tictactoe.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+@AllArgsConstructor
 public class Game {
     @Getter
     @Setter
-    private Boolean upperLeft;
+    private List<String> currentTTT;
 
     @Getter
     @Setter
-    private Boolean upperMiddle;
+    private List<String> previousTTT;
 
-    @Getter
-    @Setter
-    private Boolean upperRight;
+    public void updateGame() {
+        if (this.isValid()) {
+            this.overwritePreviousTTTWithCurrentTTT();
+            this.drawACircleInCurrentTTT();
+        } else {
+            this.overwriteCurrentTTTWithPreviousTTT();
+        }
+    }
 
-    @Getter
-    @Setter
-    private Boolean middleLeft;
+    private boolean isValid() {
+        List<Integer> indeksyTamGdzieBedoRoznice = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            if (!currentTTT.get(i).equals(previousTTT.get(i))) {
+                indeksyTamGdzieBedoRoznice.add(i);
+            }
+        }
+        if (indeksyTamGdzieBedoRoznice.size() == 0) {
+            return true;
+        } else {
+            int indexTamGdzieJestRoznica = indeksyTamGdzieBedoRoznice.get(0);
+            String original = previousTTT.get(indexTamGdzieJestRoznica);
+            String newValue = currentTTT.get(indexTamGdzieJestRoznica);
+            return original.isEmpty() && newValue.equals("X");
+        }
+    }
 
-    @Getter
-    @Setter
-    private Boolean middle;
+    private void overwritePreviousTTTWithCurrentTTT() {
+        for (byte i = 0; i < 9; i++) {
+            this.previousTTT.set(i, this.currentTTT.get(i));
+        }
+    }
 
-    @Getter
-    @Setter
-    private Boolean middleRight;
+    private void drawACircleInCurrentTTT() {
+        List<Integer> indeksyPolPustych = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            if (this.currentTTT.get(i).equals("")) {
+                indeksyPolPustych.add(i);
+            }
+        }
+        Random random = new Random();
+        this.currentTTT.set(random.nextInt(indeksyPolPustych.size()), "O");
+    }
 
-    @Getter
-    @Setter
-    private Boolean lowerLeft;
-
-    @Getter
-    @Setter
-    private Boolean lowerMiddle;
-
-    @Getter
-    @Setter
-    private Boolean lowerRight;
+    private void overwriteCurrentTTTWithPreviousTTT() {
+        for (byte i = 0; i < 9; i++) {
+            this.currentTTT.set(i, this.previousTTT.get(i));
+        }
+    }
 }
