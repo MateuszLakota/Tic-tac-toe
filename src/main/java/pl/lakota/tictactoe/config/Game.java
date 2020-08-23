@@ -12,58 +12,67 @@ import java.util.Random;
 public class Game {
     @Getter
     @Setter
-    private List<String> currentTTT;
+    private List<String> currentBoard;
 
     @Getter
     @Setter
-    private List<String> previousTTT;
+    private List<String> previousBoard;
 
     public void updateGame() {
-        if (this.isValid()) {
-            this.overwritePreviousTTTWithCurrentTTT();
-            this.drawACircleInCurrentTTT();
+        if (this.isDecisionValid()) {
+            this.overwritePreviousBoardWithCurrentBoard();
+            this.drawACircleOnTheBoard();
+            this.overwritePreviousBoardWithCurrentBoard();
         } else {
-            this.overwriteCurrentTTTWithPreviousTTT();
+            this.restoreTheBoardToPreviousState();
         }
     }
 
-    private boolean isValid() {
-        List<Integer> indeksyTamGdzieBedoRoznice = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            if (!currentTTT.get(i).equals(previousTTT.get(i))) {
-                indeksyTamGdzieBedoRoznice.add(i);
+    private boolean isDecisionValid() {
+        List<Byte> indexesOfBoardsFieldsWithDifferences = new ArrayList<>();
+        for (byte i = 0; i < this.currentBoard.size(); i++) {
+            if (!this.currentBoard.get(i).equalsIgnoreCase(this.previousBoard.get(i))) {
+                indexesOfBoardsFieldsWithDifferences.add(i);
             }
         }
-        if (indeksyTamGdzieBedoRoznice.size() == 0) {
-            return true;
+        if (indexesOfBoardsFieldsWithDifferences.size() != 1) {
+            return false;
         } else {
-            int indexTamGdzieJestRoznica = indeksyTamGdzieBedoRoznice.get(0);
-            String original = previousTTT.get(indexTamGdzieJestRoznica);
-            String newValue = currentTTT.get(indexTamGdzieJestRoznica);
-            return original.isEmpty() && newValue.equals("X");
+            int indexOfBoardsFieldWithDifference = indexesOfBoardsFieldsWithDifferences.get(0);
+            String previousField = this.previousBoard.get(indexOfBoardsFieldWithDifference);
+            String currentField = this.currentBoard.get(indexOfBoardsFieldWithDifference);
+            return previousField.isEmpty() && currentField.equalsIgnoreCase("X");
         }
     }
 
-    private void overwritePreviousTTTWithCurrentTTT() {
-        for (byte i = 0; i < 9; i++) {
-            this.previousTTT.set(i, this.currentTTT.get(i));
+    private void overwritePreviousBoardWithCurrentBoard() {
+        for (byte i = 0; i < this.currentBoard.size(); i++) {
+            this.previousBoard.set(i, this.currentBoard.get(i));
         }
     }
 
-    private void drawACircleInCurrentTTT() {
-        List<Integer> indeksyPolPustych = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            if (this.currentTTT.get(i).equals("")) {
-                indeksyPolPustych.add(i);
+    private void drawACircleOnTheBoard() {
+        List<Byte> indexesOfBoardEmptyFields = new ArrayList<>();
+        for (byte i = 0; i < this.currentBoard.size(); i++) {
+            if (this.currentBoard.get(i).isEmpty()) {
+                indexesOfBoardEmptyFields.add(i);
             }
         }
-        Random random = new Random();
-        this.currentTTT.set(random.nextInt(indeksyPolPustych.size()), "O");
+        byte index = indexesOfBoardEmptyFields.get(new Random().nextInt(indexesOfBoardEmptyFields.size()));
+        this.currentBoard.set(index, "O");
     }
 
-    private void overwriteCurrentTTTWithPreviousTTT() {
-        for (byte i = 0; i < 9; i++) {
-            this.currentTTT.set(i, this.previousTTT.get(i));
+    private void restoreTheBoardToPreviousState() {
+        for (byte i = 0; i < this.currentBoard.size(); i++) {
+            this.currentBoard.set(i, this.previousBoard.get(i));
         }
+    }
+
+    private void checkVictoryCondition() {
+
+    }
+
+    private boolean isVictorious() {
+        return false;
     }
 }
