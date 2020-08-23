@@ -113,7 +113,7 @@ public class Game {
         return list;
     }
 
-//    public boolean shouldElementBeReadonly(byte index) {
-//        return !this.currentBoard.get(index).isBlank();
-//    }
+    public boolean shouldElementBeReadonly(byte index) {
+        return !this.currentBoard.get(index).isBlank();
+    }
 }
