@@ -12,35 +12,35 @@
         <table>
         <tr>
             <td>
-                <form:textarea path="currentBoard[0]" style="resize:none" class="form-control" readonly="false"/>
+                <form:textarea path="currentBoard[0]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(0)}"/>
             </td>
             <td>
-                <form:textarea path="currentBoard[1]" style="resize:none" class="form-control" readonly="false"/>
+                <form:textarea path="currentBoard[1]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(1)}"/>
             </td>
             <td>
-                <form:textarea path="currentBoard[2]" style="resize:none" class="form-control" readonly="false"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:textarea path="currentBoard[3]" style="resize:none" class="form-control" readonly="false"/>
-            </td>
-            <td>
-                <form:textarea path="currentBoard[4]" style="resize:none" class="form-control" readonly="false"/>
-            </td>
-            <td>
-                <form:textarea path="currentBoard[5]" style="resize:none" class="form-control" readonly="false"/>
+                <form:textarea path="currentBoard[2]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(2)}"/>
             </td>
         </tr>
         <tr>
             <td>
-                <form:textarea path="currentBoard[6]" style="resize:none" class="form-control" readonly="false"/>
+                <form:textarea path="currentBoard[3]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(3)}"/>
             </td>
             <td>
-                <form:textarea path="currentBoard[7]" style="resize:none" class="form-control" readonly="false"/>
+                <form:textarea path="currentBoard[4]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(4)}"/>
             </td>
             <td>
-                <form:textarea path="currentBoard[8]" style="resize:none" class="form-control" readonly="false"/>
+                <form:textarea path="currentBoard[5]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(5)}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:textarea path="currentBoard[6]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(6)}"/>
+            </td>
+            <td>
+                <form:textarea path="currentBoard[7]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(7)}"/>
+            </td>
+            <td>
+                <form:textarea path="currentBoard[8]" style="resize:none" class="form-control" readonly="${game.shouldElementBeReadonly(8)}"/>
             </td>
         </tr>
         </table>

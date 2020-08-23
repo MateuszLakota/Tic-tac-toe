@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class Game {
@@ -68,11 +69,51 @@ public class Game {
         }
     }
 
-    private void checkVictoryCondition() {
+    /**
+     * @return - "X", "O" or null.
+     */
+    public String getWinner() {
+        var listOfLists = new ArrayList<List<String>>();
+        listOfLists.add(currentBoard.subList(0, 3));
+        listOfLists.add(currentBoard.subList(3, 6));
+        listOfLists.add(currentBoard.subList(6, 9));
+        listOfLists.add(getColumn(0));
+        listOfLists.add(getColumn(1));
+        listOfLists.add(getColumn(2));
+        listOfLists.add(getDiagonalList(true));
+        listOfLists.add(getDiagonalList(false));
 
+        var result = listOfLists.stream().filter(list -> list.stream().
+                allMatch(elt -> !elt.equals("") && elt.equals(list.get(0)))).collect(Collectors.toList());
+        if (result.size() > 0) {
+            return result.get(0).get(0);
+        }
+        return null;
     }
 
-    private boolean isVictorious() {
-        return false;
+    private List<String> getColumn(int index) {
+        var column = new ArrayList<String>();
+        column.add(currentBoard.get(index));
+        column.add(currentBoard.get(index + 3));
+        column.add(currentBoard.get(index + 6));
+        return column;
     }
+
+    private List<String> getDiagonalList(boolean fromUpperLeft) {
+        var list = new ArrayList<String>();
+        if (fromUpperLeft) {
+            list.add(this.currentBoard.get(0));
+            list.add(this.currentBoard.get(4));
+            list.add(this.currentBoard.get(8));
+        } else {
+            list.add(this.currentBoard.get(2));
+            list.add(this.currentBoard.get(4));
+            list.add(this.currentBoard.get(6));
+        }
+        return list;
+    }
+
+//    public boolean shouldElementBeReadonly(byte index) {
+//        return !this.currentBoard.get(index).isBlank();
+//    }
 }

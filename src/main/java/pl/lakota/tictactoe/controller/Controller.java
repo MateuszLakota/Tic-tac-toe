@@ -16,14 +16,29 @@ public class Controller {
 
     @GetMapping("/")
     public String getGamePage(Model model) {
-        model.addAttribute("game", new Game(new ArrayList<>(), new ArrayList<>()));
+        model.addAttribute("game", new Game(getArrayList(), getArrayList()));
         return GAME_PAGE;
+    }
+
+    private ArrayList<String> getArrayList() {
+        var list = new ArrayList<String>();
+        for (int i = 0; i < 9; i++) {
+            list.add("");
+        }
+        return list;
     }
 
     @PostMapping("/handleDecision")
     public String handleDecision(@ModelAttribute("game") Game game, Model model) {
         game.updateGame();
-        model.addAttribute("game", game);
-        return GAME_PAGE;
+        var winner = game.getWinner();
+        if (winner != null) {
+            var communicate = winner.equals("X") ? "Player wins." : "Computer wins.";
+            model.addAttribute("communicate", communicate);
+            return FINAL_PAGE;
+        } else {
+            model.addAttribute("game", game);
+            return GAME_PAGE;
+        }
     }
 }
