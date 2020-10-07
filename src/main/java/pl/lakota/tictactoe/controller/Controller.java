@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.lakota.tictactoe.config.Game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -16,12 +17,12 @@ public class Controller {
 
     @GetMapping("/")
     public String getGamePage(Model model) {
-        model.addAttribute("game", new Game(getArrayList(), getArrayList()));
+        model.addAttribute("game", new Game(getListOfEmptyString(), getListOfEmptyString()));
         return GAME_PAGE;
     }
 
-    private ArrayList<String> getArrayList() {
-        var list = new ArrayList<String>();
+    private List<String> getListOfEmptyString() {
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             list.add("");
         }
@@ -33,7 +34,7 @@ public class Controller {
         game.updateGame();
         var winner = game.getWinner();
         if (winner != null) {
-            var communicate = winner.equals("X") ? "Player wins." : "Computer wins.";
+            var communicate = winner.equals("X") ? "Player wins." : "Computer wins."; // FIXME Returned opposite String.
             model.addAttribute("communicate", communicate);
             return FINAL_PAGE;
         } else {
