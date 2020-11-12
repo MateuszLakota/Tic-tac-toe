@@ -1,7 +1,7 @@
 # Tic-tac-toe
 
-Web app tic-tac-toe with the use of:
-1) Java 14;
-2) Lombok;
-3) Spring Boot MVC (JSP);
-4) Spring Boot Rest API.
+Game board web application using REST API to exchange information regarding state of the game board with the server, technologies used::
+1) Java SE;
+2) Spring Boot MVC (JSP);
+3) Spring Boot Rest API;
+4) Lombok.
